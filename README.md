@@ -27,7 +27,7 @@
 ## Timer/deploy rules
 * First deploy the timer contract. Write down the timer contract ID.
 * Update the main contract with the address of the timer contract.
-* Deploy the main contract. Send first transaction with 10 Signa and no message.
+* Deploy the main contract. Send manually the first transaction with 10 Signa and no message.
 * On first run, the main contract will send a transaction to the timer contract.
 * The first transaction received by timer contract will lock it to accept activations only from the that address.
 * Timer contract will sleep for the configured amount of blocks (one week), then send the wakeup command to the main contract.
@@ -35,27 +35,29 @@
 ## Frontend rules
 For main page:
 * Get '/api?requestType=getATMapValues' from key1=0.
-* Set `message_transactionID` to (key2=0) value: the defauld AD.
-* If the contract state (key2=2) is 0, set `message_transactionID` to (key2=1) value. Contract is not suspended.
+* Set `message_transactionID` to 'Map [1, 0]' value. It is the defauld AD.
+* If the contract state 'Map [0, 2]' is 0, set `message_transactionID` to 'Map [0, 1]' value, because the contract is not suspended.
 * Get the `message_AD` from the `message_transactionID`.
 * Parse the `message_AD`. If invalid, terminate (do not update).
 * Change page container to show the AD found.
 * Remember to add a link to the bid page.
 
 For bid page:
-* Bid page must have forms for all commands.
-* Get '/api?requestType=getATMapValues' from key1=1.
-* Set values accordingly for the next minimum bid.
-* Parse the `current_highest_transactionID_AD`. If invalid, do not update AD preview. If Valid, draw AD preview.
+* Bid page must have forms for all commands (or a textbox for custom owner commands) (suspend, resume, minimum, step, bid and "setup ad").
+* Get '/api?requestType=getATMapValues' from Map key1=1 to get contract details.
+* In "bid" command, set values accordingly for the next minimum bid.
+* Parse the `current_highest_transactionID_AD` 'Map [1, 4]'. If invalid, do not update AD preview. If Valid, draw AD preview.
+* If user links thw XT wallet, get the ad option for him 'Map [3, accountID]'. Only show option to bid if user has an valid AD. Show a preview for user AD.
+* In command "setup AD", user enters the image ID and link. Page creates the setup message and sends the transaction. Optional add a preview.
 
 ## Contract memory map
-Map memory key1 and key2 pairs will be refered as [key1, key2].
-* [0, 0] => TransactionID for the default AD.
-* [0, 1] => TransactionID for the winner's AD.
-* [0, 2] => Contract state. 0 for running, 1 for suspended.
-* [1, 0] => Minimum bid amount.
-* [1, 1] => Minimum increment amount.
-* [1, 2] => Current highest userID.
-* [1, 3] => Current highest amount.
-* [1, 4] => Current highest TransactionID AD (for pre-visualization purpose)
-* [3, accountId] => Transaction ID with the AD details for the given account
+Map memory key1 and key2 pairs will be refered as 'Map [key1, key2]'.
+* Map [0, 0] => TransactionID for the default AD.
+* Map [0, 1] => TransactionID for the winner's AD.
+* Map [0, 2] => Contract state. 0 for running, 1 for suspended.
+* Map [1, 0] => Minimum bid amount.
+* Map [1, 1] => Minimum increment amount.
+* Map [1, 2] => Current highest userID.
+* Map [1, 3] => Current highest amount.
+* Map [1, 4] => Current highest TransactionID AD (for pre-visualization purpose)
+* Map [3, accountId] => Transaction ID with the AD details for the given account

@@ -10,7 +10,7 @@
 #pragma maxConstVars 4
 
 /* configuration */
-#define TIMER_CONTRACT 555
+#define TIMER_CONTRACT 444
 #define CONTRACT_CREATOR_PERCENTAGE 2
 #define CONTRACT_CREATOR_ACCOUNT 1001
 #define MINIMUM_BID 1_0000_0000
@@ -36,6 +36,7 @@ struct MESSAGE {
     long bidSuperseeded[4];
     long bidAccepted[4];
     long adOnline[4];
+    long topUpContract[4];
 } message;
 struct AUCTION {
     long minimum;
@@ -56,9 +57,13 @@ void firstRun() {
     const message.bidSuperseeded[] = 'Your bid was superseeded.       ';
     const message.bidAccepted[] = 'Your bid was accepted!          ';
     const message.adOnline[] = 'Your Ad is online!              ';
+    const message.topUpContract[] = 'Funds added!                    ';
     ACTIVATE_TIMER();
-    auction.minimum=MINIMUM_BID;
-    auction.step=MINIMUM_BID_STEP;
+    setMapValue(0, 2, 1); // start suspended state
+    auction.minimum=MINIMUM_BID;  // start minimum bid amount
+    setMapValue(1, 0, auction.minimum);
+    auction.step=MINIMUM_BID_STEP;  // start minimum bid step increase amount
+    setMapValue(1, 1, auction.step);
     auction.bestBid=auction.bestBidUser=0;
 }
 
@@ -76,7 +81,7 @@ void main(void) {
         case 'bid':
             processBid();
             break;
-        case 0:
+        case "":
             if (currentTX.sender == TIMER_CONTRACT) {
                 dispatchAuctionEnd = true;
                 break;
@@ -111,8 +116,8 @@ void processOwnerCommands() {
         setMapValue(1, 1, currentTX.amount);
         break;
     case 0:
-        sendMessage(message.missingCommand, currentTX.sender);
-        // Do not return the signa. Used for top up balance.
+        sendMessage(message.topUpContract, currentTX.sender);
+        // Do not return the signa. Used to top up balance.
         return;
     default:
         // setting default ad transactionID
@@ -165,3 +170,77 @@ void auctionEnd() {
 }
 
 firstRun();
+
+
+/*
+
+[
+  // 
+  {
+    // Top up the contract. Expect success and contract with balance.
+    "blockheight": 2,
+    "sender": "555n",
+    "recipient": "999n",
+    "amount": "10_0000_0000n"
+  },
+  {
+    // Change default ad
+    "blockheight": 4,
+    "sender": "555n",
+    "recipient": "999",
+    "amount": "1_0000_0000",
+    "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
+  },
+  {
+    // First BID. Expect error ad not set and refund.
+    "blockheight": 6,
+    "sender": "1000n",
+    "recipient": "999",
+    "amount": "501_0000_0000",
+    "messageText": "bid"
+  },
+  {
+    // 1000 set his ad. Expect success.
+    "blockheight": 8,
+    "sender": "1000n",
+    "recipient": "999",
+    "amount": "1_0000_0000",
+    "messageText": "67d7shfsdhgf:http:/deleterium.info/"
+  },
+  {
+    // 2000 set his ad. Expect success.
+    "blockheight": 8,
+    "sender": "2000n",
+    "recipient": "999",
+    "amount": "1_0000_0000",
+    "messageText": "rdda4sd4ard;https:/walter.com/"
+  },
+  {
+    // 1000 BID. Expect to be accepted.
+    "blockheight": 10,
+    "sender": "1000n",
+    "recipient": "999",
+    "amount": "501_0000_0000",
+    "messageText": "bid"
+  },
+  {
+    // 2000 BID. Expect to be accepted. (refund user 1000)
+    "blockheight": 12,
+    "sender": "2000n",
+    "recipient": "999",
+    "amount": "511_0000_0000",
+    "messageText": "bid"
+  },
+  {
+    // End auction. Expect ad from user 2000 to be online, and new auction started
+    "blockheight": 14,
+    "sender": "444n",
+    "recipient": "999",
+    "amount": "1_1000_0000"
+  }
+]
+
+
+
+
+*/
