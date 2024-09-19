@@ -183,65 +183,35 @@ firstRun();
   // testcase 1: regular use
   {
     // Top up the contract. Expect success and contract with balance.
-    "blockheight": 2,
-    "sender": "555n",
-    "recipient": "999n",
-    "amount": "10_0000_0000n"
+    "blockheight": 2, "sender": "555n", "recipient": "999n", "amount": "10_0000_0000n"
   },
   {
     // Change default ad
-    "blockheight": 4,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
+    "blockheight": 4, "sender": "555n", "recipient": "999", "amount": "5000_0000", "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
   },
   {
     // First BID. Expect error ad not set and refund.
-    "blockheight": 6,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "500_5000_0000",
-    "messageText": "bid"
+    "blockheight": 6, "sender": "1000n", "recipient": "999", "amount": "500_5000_0000", "messageText": "bid"
   },
   {
     // 1000 set his ad. Expect success.
-    "blockheight": 8,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "67d7shfsdhgf:http:/deleterium.info/"
+    "blockheight": 8, "sender": "1000n", "recipient": "999", "amount": "5000_0000", "messageText": "67d7shfsdhgf:http:/deleterium.info/"
   },
   {
     // 2000 set his ad. Expect success.
-    "blockheight": 8,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "rdda4sd4ard;https:/walter.com/"
+    "blockheight": 8, "sender": "2000n", "recipient": "999", "amount": "5000_0000", "messageText": "rdda4sd4ard;https:/walter.com/"
   },
   {
     // 1000 BID. Expect to be accepted.
-    "blockheight": 10,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "500_5000_0000",
-    "messageText": "bid"
+    "blockheight": 10, "sender": "1000n", "recipient": "999", "amount": "500_5000_0000", "messageText": "bid"
   },
   {
     // 2000 BID. Expect to be accepted. (refund user 1000)
-    "blockheight": 12,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "510_5000_0000",
-    "messageText": "bid"
+    "blockheight": 12, "sender": "2000n", "recipient": "999", "amount": "510_5000_0000", "messageText": "bid"
   },
   {
     // End auction. Expect ad from user 2000 to be online, and new auction started
-    "blockheight": 14,
-    "sender": "444n",
-    "recipient": "999",
-    "amount": "1_1000_0000"
+    "blockheight": 14, "sender": "444n", "recipient": "999", "amount": "1_1000_0000"
   }
 ]
 
@@ -249,142 +219,75 @@ firstRun();
   // Testcase 2: some wrong transactions.
   {
     // Top up the contract. Already tested.
-    "blockheight": 2,
-    "sender": "555n",
-    "recipient": "999n",
-    "amount": "10_0000_0000n"
+    "blockheight": 2, "sender": "555n", "recipient": "999n", "amount": "10_0000_0000n"
   },
   {
     // Change default ad.  Already tested.
-    "blockheight": 4,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
+    "blockheight": 4, "sender": "555n", "recipient": "999", "amount": "5000_0000", "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
   },
   {
     // 1000 set his ad. Already tested.
-    "blockheight": 6,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "67d7shfsdhgf:http:/deleterium.info/"
+    "blockheight": 6, "sender": "1000n", "recipient": "999", "amount": "5000_0000", "messageText": "67d7shfsdhgf:http:/deleterium.info/"
   },
   {
     // 1000 BID accepted. Already tested.
-    "blockheight": 8,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "500_5000_0000",
-    "messageText": "bid"
+    "blockheight": 8, "sender": "1000n", "recipient": "999", "amount": "500_5000_0000", "messageText": "bid"
   },
   {
     // End auction. Expect ad from user 1000 to be online, and new auction started. Already tested
-    "blockheight": 10,
-    "sender": "444n",
-    "recipient": "999",
-    "amount": "1_1000_0000"
+    "blockheight": 10, "sender": "444n", "recipient": "999", "amount": "1_1000_0000"
   },
   {
     // Suspend Ad. Expect update in map value and refund 0.1
-    "blockheight": 12,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "6000_0000",
-    "messageText": "suspend"
+    "blockheight": 12, "sender": "555n", "recipient": "999", "amount": "6000_0000", "messageText": "suspend"
   },
   {
     // Resume Ad. Expect update in map value.
-    "blockheight": 14,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "resume"
+    "blockheight": 14, "sender": "555n", "recipient": "999", "amount": "5000_0000", "messageText": "resume"
   },
   {
     // Set new minimum BID. Expect update in variables and map (and refund).
-    "blockheight": 16,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "250_5000_0000",
-    "messageText": "minimum"
+    "blockheight": 16, "sender": "555n", "recipient": "999", "amount": "250_5000_0000", "messageText": "minimum"
   },
   {
     // Set new minimum BID increment. Expect update in variables and map (and refund).
-    "blockheight": 18,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "200_5000_0000",
-    "messageText": "step"
+    "blockheight": 18, "sender": "555n", "recipient": "999", "amount": "200_5000_0000", "messageText": "step"
   },
   {
     // 1000 BID below minimum (but above step). Expect error.
-    "blockheight": 20,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "205_5000_0000",
-    "messageText": "bid"
+    "blockheight": 20, "sender": "1000n", "recipient": "999", "amount": "205_5000_0000", "messageText": "bid"
   },
   {
     // 2000 set his ad. Already tested.
-    "blockheight": 22,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "rdda4sd4ard;https:/walter.com/"
+    "blockheight": 22, "sender": "2000n", "recipient": "999", "amount": "5000_0000", "messageText": "rdda4sd4ard;https:/walter.com/"
   },
   {
     // 1000 BID at minimum. Already tested.
-    "blockheight": 24,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "250_5000_0000",
-    "messageText": "bid"
+    "blockheight": 24, "sender": "1000n", "recipient": "999", "amount": "250_5000_0000", "messageText": "bid"
   },
   {
     // 2000 BID above minimum but below step. Expect error.
-    "blockheight": 26,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "400_5000_0000",
-    "messageText": "bid"
+    "blockheight": 26, "sender": "2000n", "recipient": "999", "amount": "400_5000_0000", "messageText": "bid"
   },
   {
     // 2000 BID above minimum and above step. Expect success.
-    "blockheight": 28,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "450_5000_0000",
-    "messageText": "bid"
+    "blockheight": 28, "sender": "2000n", "recipient": "999", "amount": "450_5000_0000", "messageText": "bid"
   },
   {
     // 1000 BID much bigger than step. Expect success.
-    "blockheight": 30,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "1000_5000_0000",
-    "messageText": "bid"
+    "blockheight": 30, "sender": "1000n", "recipient": "999", "amount": "1000_5000_0000", "messageText": "bid"
   },
   {
     // 1000 wrong command.
-    "blockheight": 32,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "100_5000_0000"
+    "blockheight": 32, "sender": "1000n", "recipient": "999", "amount": "100_5000_0000"
   },
   {
     // End auction. Expect ad from user 1000 to be online, and new auction started. Already tested
-    "blockheight": 34,
-    "sender": "444n",
-    "recipient": "999",
-    "amount": "1_1000_0000"
+    "blockheight": 34, "sender": "444n", "recipient": "999", "amount": "1_1000_0000"
   },
   {
     // End auction withou bid. Expect set suspend and trigger new auction.
-    "blockheight": 36,
-    "sender": "444n",
-    "recipient": "999",
-    "amount": "1_1000_0000"
+    "blockheight": 36, "sender": "444n", "recipient": "999", "amount": "1_1000_0000"
   }
 ]
 
@@ -392,58 +295,31 @@ firstRun();
   // testcase 3: Deploying both contracts. Expect running smoothly.
   {
     // Top up the contract. Expect success and contract with balance.
-    "blockheight": 2,
-    "sender": "555n",
-    "recipient": "999n",
-    "amount": "10_0000_0000n"
+    "blockheight": 2, "sender": "555n", "recipient": "999n", "amount": "10_0000_0000n"
   },
   {
     // Change default ad
-    "blockheight": 4,
-    "sender": "555n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
+    "blockheight": 4, "sender": "555n", "recipient": "999", "amount": "5000_0000", "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
   },
   {
     // First BID. Expect error ad not set and refund.
-    "blockheight": 6,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "500_5000_0000",
-    "messageText": "bid"
+    "blockheight": 6, "sender": "1000n", "recipient": "999", "amount": "500_5000_0000", "messageText": "bid"
   },
   {
     // 1000 set his ad. Expect success.
-    "blockheight": 8,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "67d7shfsdhgf:http:/deleterium.info/"
+    "blockheight": 8, "sender": "1000n", "recipient": "999", "amount": "5000_0000", "messageText": "67d7shfsdhgf:http:/deleterium.info/"
   },
   {
     // 2000 set his ad. Expect success.
-    "blockheight": 8,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "5000_0000",
-    "messageText": "rdda4sd4ard;https:/walter.com/"
+    "blockheight": 8, "sender": "2000n", "recipient": "999", "amount": "5000_0000", "messageText": "rdda4sd4ard;https:/walter.com/"
   },
   {
     // 1000 BID. Expect to be accepted.
-    "blockheight": 8,
-    "sender": "1000n",
-    "recipient": "999",
-    "amount": "500_5000_0000",
-    "messageText": "bid"
+    "blockheight": 8, "sender": "1000n", "recipient": "999", "amount": "500_5000_0000", "messageText": "bid"
   },
   {
     // 2000 BID. Expect to be accepted. (refund user 1000)
-    "blockheight": 10,
-    "sender": "2000n",
-    "recipient": "999",
-    "amount": "510_5000_0000",
-    "messageText": "bid"
+    "blockheight": 10, "sender": "2000n", "recipient": "999", "amount": "510_5000_0000", "messageText": "bid"
   }
 // timer wakes contract at block 12
 ]
