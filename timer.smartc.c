@@ -4,6 +4,7 @@
  a new draw.
 #program activationAmount 5000_0000
 
+#program contract 444
 #pragma verboseAssembly
 #pragma optimizationLevel 3
 // #pragma version 2.1.1
@@ -34,7 +35,6 @@ struct TXINFO {
 
 long adAuctionId;
 long sleepBlocks;
-long phase;
 long goingToSleep;
 /* End of global variables */
 
@@ -48,13 +48,8 @@ void main () {
         while ((currentTX.txid = getNextTx()) != 0) {
             // get details
             currentTX.sender = getSender(currentTX.txid);
-            if (phase == 0) {
-                readShortMessage(currentTX.txid, &adAuctionId, 1);
-                if (adAuctionId == 0) {
-                    continue;
-                }
-                phase = 1;
-                continue;
+            if (adAuctionId == 0) {
+                adAuctionId = currentTX.sender;
             }
             if (currentTX.sender != adAuctionId) {
                 continue;
@@ -68,41 +63,24 @@ void main () {
     } while (goingToSleep);
 }
 
-/* testcase 1: wrong messsages, no sleep
+/* Testcase 1: regular use
 [
   {
-    // wrong message
-    "blockheight": 4,    "sender": "555",    "recipient": "1000n",    "amount": "5000_0000n"
+    // start. Expect timer start
+    "blockheight": 2,    "sender": "555",    "recipient": "444",    "amount": "5000_0000n"
   },
   {
-    // right message
-    "blockheight": 6,    "sender": "555",    "recipient": "1000n",    "amount": "5000_0000n", "messageHex": "e703000000000000"
+    // Simulated incoming message from unauthorized address. Expect nothing.
+    "blockheight": 4,    "sender": "7987987",    "recipient": "444",    "amount": "1_2000_0000n"
   },
-  // Expecting to set auction contract id to 999 and no sleep/draw activation.
-]
-
-*/
-
-/* Testcase 2: regular use
-[
+  // Expect sending message at block 11
   {
-    // right message
-    "blockheight": 2,    "sender": "555",    "recipient": "1000n",    "amount": "5000_0000n", "messageHex": "e703000000000000"
+    // Simulated incoming message from unauthorized address. Expect not trigger timer.
+    "blockheight": 13,    "sender": "766767",    "recipient": "444",    "amount": "5000_0000n"
   },
   {
-    // Simulated incoming message from unauthorized address
-    "blockheight": 4,    "sender": "7987987",    "recipient": "1000n",    "amount": "1_2000_0000n"
-  },
-  // Expecting timer not active
-  {
-    // Simulated incoming message from auction contract
-    "blockheight": 6,    "sender": "999",    "recipient": "1000n",    "amount": "1_2000_0000n"
-  },
-  // Expecting to sleep and send draw activation on round 15.
-  {
-    // Simulated incoming message from lotto contract
-    "blockheight": 16,    "sender": "999",    "recipient": "1000n",    "amount": "1_2000_0000n"
+    // Simulated incoming message from registered and entering sleep. Sending at block 27
+    "blockheight": 18,    "sender": "555",    "recipient": "444",    "amount": "5000_0000n"
   }
-  // Expecting to sleep and send draw activation on round 25.
 ]
 */
