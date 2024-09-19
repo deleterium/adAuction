@@ -388,4 +388,64 @@ firstRun();
   }
 ]
 
+[
+  // testcase 3: Deploying both contracts. Expect running smoothly.
+  {
+    // Top up the contract. Expect success and contract with balance.
+    "blockheight": 2,
+    "sender": "555n",
+    "recipient": "999n",
+    "amount": "10_0000_0000n"
+  },
+  {
+    // Change default ad
+    "blockheight": 4,
+    "sender": "555n",
+    "recipient": "999",
+    "amount": "5000_0000",
+    "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
+  },
+  {
+    // First BID. Expect error ad not set and refund.
+    "blockheight": 6,
+    "sender": "1000n",
+    "recipient": "999",
+    "amount": "500_5000_0000",
+    "messageText": "bid"
+  },
+  {
+    // 1000 set his ad. Expect success.
+    "blockheight": 8,
+    "sender": "1000n",
+    "recipient": "999",
+    "amount": "5000_0000",
+    "messageText": "67d7shfsdhgf:http:/deleterium.info/"
+  },
+  {
+    // 2000 set his ad. Expect success.
+    "blockheight": 8,
+    "sender": "2000n",
+    "recipient": "999",
+    "amount": "5000_0000",
+    "messageText": "rdda4sd4ard;https:/walter.com/"
+  },
+  {
+    // 1000 BID. Expect to be accepted.
+    "blockheight": 8,
+    "sender": "1000n",
+    "recipient": "999",
+    "amount": "500_5000_0000",
+    "messageText": "bid"
+  },
+  {
+    // 2000 BID. Expect to be accepted. (refund user 1000)
+    "blockheight": 10,
+    "sender": "2000n",
+    "recipient": "999",
+    "amount": "510_5000_0000",
+    "messageText": "bid"
+  }
+// timer wakes contract at block 12
+]
+
 */
