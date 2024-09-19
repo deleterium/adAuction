@@ -1,11 +1,11 @@
 #program name AdAuction
 #program description Contract to auction an advertisement at block explorer. It also stores the information about winners and ad details.
-#define ACTIVATION_AMOUNT 1_0000_0000
+#define ACTIVATION_AMOUNT 5000_0000
 #program activationAmount ACTIVATION_AMOUNT
 
 #pragma verboseAssembly
-// #pragma optimizationLevel 3
-// #pragma version 2.1.1
+#pragma optimizationLevel 3
+#pragma version 2.1.1
 #pragma maxAuxVars 4
 #pragma maxConstVars 4
 
@@ -17,7 +17,7 @@
 #define MINIMUM_BID_STEP 1_0000_0000
 /* end of configuration */
 
-#define KEEP_BALANCE 10_0000_0000
+#define KEEP_BALANCE 5_0000_0000
 #define ACTIVATE_TIMER() (sendAmount(ACTIVATION_AMOUNT + 4000_0000, TIMER_CONTRACT))
 
 /* start of global variables */
@@ -46,6 +46,7 @@ struct AUCTION {
     long bestBidUser;
 } auction;
 long onwer;
+const long n100 = 100;
 /* end of global variables */
 
 void firstRun() {
@@ -192,7 +193,7 @@ firstRun();
     "blockheight": 4,
     "sender": "555n",
     "recipient": "999",
-    "amount": "1_0000_0000",
+    "amount": "5000_0000",
     "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
   },
   {
@@ -200,7 +201,7 @@ firstRun();
     "blockheight": 6,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "501_0000_0000",
+    "amount": "500_5000_0000",
     "messageText": "bid"
   },
   {
@@ -208,7 +209,7 @@ firstRun();
     "blockheight": 8,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "1_0000_0000",
+    "amount": "5000_0000",
     "messageText": "67d7shfsdhgf:http:/deleterium.info/"
   },
   {
@@ -216,7 +217,7 @@ firstRun();
     "blockheight": 8,
     "sender": "2000n",
     "recipient": "999",
-    "amount": "1_0000_0000",
+    "amount": "5000_0000",
     "messageText": "rdda4sd4ard;https:/walter.com/"
   },
   {
@@ -224,7 +225,7 @@ firstRun();
     "blockheight": 10,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "501_0000_0000",
+    "amount": "500_5000_0000",
     "messageText": "bid"
   },
   {
@@ -232,7 +233,7 @@ firstRun();
     "blockheight": 12,
     "sender": "2000n",
     "recipient": "999",
-    "amount": "511_0000_0000",
+    "amount": "510_5000_0000",
     "messageText": "bid"
   },
   {
@@ -258,7 +259,7 @@ firstRun();
     "blockheight": 4,
     "sender": "555n",
     "recipient": "999",
-    "amount": "1_0000_0000",
+    "amount": "5000_0000",
     "messageText": "5tdfgd43as6s6dtst;https:/tmg.notallmine.net/"
   },
   {
@@ -266,7 +267,7 @@ firstRun();
     "blockheight": 6,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "1_0000_0000",
+    "amount": "5000_0000",
     "messageText": "67d7shfsdhgf:http:/deleterium.info/"
   },
   {
@@ -274,7 +275,7 @@ firstRun();
     "blockheight": 8,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "501_0000_0000",
+    "amount": "500_5000_0000",
     "messageText": "bid"
   },
   {
@@ -285,11 +286,11 @@ firstRun();
     "amount": "1_1000_0000"
   },
   {
-    // Suspend Ad. Expect update in map value.
+    // Suspend Ad. Expect update in map value and refund 0.1
     "blockheight": 12,
     "sender": "555n",
     "recipient": "999",
-    "amount": "1_1000_0000",
+    "amount": "6000_0000",
     "messageText": "suspend"
   },
   {
@@ -297,23 +298,23 @@ firstRun();
     "blockheight": 14,
     "sender": "555n",
     "recipient": "999",
-    "amount": "1_1000_0000",
+    "amount": "5000_0000",
     "messageText": "resume"
   },
   {
-    // Set new minimum BID. Expect update in variables and map.
+    // Set new minimum BID. Expect update in variables and map (and refund).
     "blockheight": 16,
     "sender": "555n",
     "recipient": "999",
-    "amount": "251_0000_0000",
+    "amount": "250_5000_0000",
     "messageText": "minimum"
   },
   {
-    // Set new minimum BID increment. Expect update in variables and map.
+    // Set new minimum BID increment. Expect update in variables and map (and refund).
     "blockheight": 18,
     "sender": "555n",
     "recipient": "999",
-    "amount": "201_0000_0000",
+    "amount": "200_5000_0000",
     "messageText": "step"
   },
   {
@@ -321,7 +322,7 @@ firstRun();
     "blockheight": 20,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "205_0000_0000",
+    "amount": "205_5000_0000",
     "messageText": "bid"
   },
   {
@@ -329,7 +330,7 @@ firstRun();
     "blockheight": 22,
     "sender": "2000n",
     "recipient": "999",
-    "amount": "1_0000_0000",
+    "amount": "5000_0000",
     "messageText": "rdda4sd4ard;https:/walter.com/"
   },
   {
@@ -337,7 +338,7 @@ firstRun();
     "blockheight": 24,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "251_0000_0000",
+    "amount": "250_5000_0000",
     "messageText": "bid"
   },
   {
@@ -345,7 +346,7 @@ firstRun();
     "blockheight": 26,
     "sender": "2000n",
     "recipient": "999",
-    "amount": "401_0000_0000",
+    "amount": "400_5000_0000",
     "messageText": "bid"
   },
   {
@@ -353,7 +354,7 @@ firstRun();
     "blockheight": 28,
     "sender": "2000n",
     "recipient": "999",
-    "amount": "451_0000_0000",
+    "amount": "450_5000_0000",
     "messageText": "bid"
   },
   {
@@ -361,7 +362,7 @@ firstRun();
     "blockheight": 30,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "1001_0000_0000",
+    "amount": "1000_5000_0000",
     "messageText": "bid"
   },
   {
@@ -369,7 +370,7 @@ firstRun();
     "blockheight": 32,
     "sender": "1000n",
     "recipient": "999",
-    "amount": "101_0000_0000"
+    "amount": "100_5000_0000"
   },
   {
     // End auction. Expect ad from user 1000 to be online, and new auction started. Already tested
