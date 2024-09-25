@@ -1,7 +1,7 @@
 #program name AdAuctionTimer
-#program description 1) Receive a transaction from the Lotto contract;\
- 2) Sleeps one week; 3) Send all balance to Lotto contract to trigger\
- a new draw.
+#program description 1) Receive a transaction from the adAuction contract;\
+ 2) Sleeps one week; 3) Send all balance to adAuction contract to trigger\
+ a new auction.
 #program activationAmount 5000_0000
 
 #program contract 444
