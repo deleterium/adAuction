@@ -11,10 +11,11 @@
 
 /* configuration */
 #define TIMER_CONTRACT 444
+#define CONTRACT_OWNER 555
 #define CONTRACT_CREATOR_PERCENTAGE 2
 #define CONTRACT_CREATOR_ACCOUNT 1001
-#define MINIMUM_BID 1_0000_0000
-#define MINIMUM_BID_STEP 1_0000_0000
+#define MINIMUM_BID 10_0000_0000
+#define MINIMUM_BID_STEP 5_0000_0000
 /* end of configuration */
 
 #define KEEP_BALANCE 5_0000_0000
@@ -38,6 +39,7 @@ struct MESSAGE {
     long adOnline[4];
     long topUpContract[4];
     long adSet[4];
+    long lowBalance[4];
 } message;
 struct AUCTION {
     long minimum;
@@ -45,12 +47,10 @@ struct AUCTION {
     long bestBid;
     long bestBidUser;
 } auction;
-long onwer;
 const long n100 = 100;
 /* end of global variables */
 
 void firstRun() {
-    onwer = getCreator();
     const message.notAuthorized[] = 'Not authorized                  ';
     const message.missingCommand[] = 'Please specify a command...     ';
     const message.OK[] = 'Command suceed!                 ';
@@ -61,6 +61,7 @@ void firstRun() {
     const message.adOnline[] = 'Your Ad is online!              ';
     const message.topUpContract[] = 'Funds added!                    ';
     const message.adSet[] = 'Your Ad has been set!           ';
+    const message.lowBalance[] = 'Balance low. Top up now!        ';
     ACTIVATE_TIMER();
     setMapValue(0, 2, 1); // start suspended state
     auction.minimum=MINIMUM_BID;  // start minimum bid amount
@@ -76,7 +77,7 @@ void main(void) {
         currentTX.sender = getSender(currentTX.txId);
         currentTX.amount = getAmount(currentTX.txId);
         readShortMessage(currentTX.txId, &currentTX.command, 1);
-        if (currentTX.sender == onwer) {
+        if (currentTX.sender == CONTRACT_OWNER) {
             processOwnerCommands();
             continue;
         }
@@ -121,8 +122,9 @@ void processOwnerCommands() {
         setMapValue(1, 1, auction.step);
         break;
     case "":
+        ACTIVATE_TIMER();
         sendMessage(message.topUpContract, currentTX.sender);
-        // Do not return the signa. Used to top up balance.
+        // Do not return the signa. Used to top up balance / reactivate contract.
         return;
     default:
         // setting default ad transactionID
@@ -156,7 +158,12 @@ void processBid() {
 }
 
 void auctionEnd() {
-    ACTIVATE_TIMER();
+    long balance = getCurrentBalance();
+    if (balance > ACTIVATION_AMOUNT + 1_0000_0000) {
+        ACTIVATE_TIMER();
+    } else {
+        sendMessage(message.lowBalance, CONTRACT_OWNER);
+    }
     if (auction.bestBid == 0) {
         setMapValue(0, 2, 1);
         return;
@@ -164,9 +171,9 @@ void auctionEnd() {
     setMapValue(0, 1, getMapValue(1, 4));
     setMapValue(0, 2, 0);
     sendMessage(message.adOnline, auction.bestBidUser);
-    long incomeBalance = getCurrentBalance() - KEEP_BALANCE;
-    sendAmount((100-CONTRACT_CREATOR_PERCENTAGE)*incomeBalance/100, onwer);
-    sendAmount(CONTRACT_CREATOR_PERCENTAGE*incomeBalance/100, CONTRACT_CREATOR_ACCOUNT);
+    balance = getCurrentBalance() - KEEP_BALANCE;
+    sendAmount((100-CONTRACT_CREATOR_PERCENTAGE)*balance/100, CONTRACT_OWNER);
+    sendAmount(CONTRACT_CREATOR_PERCENTAGE*balance/100, CONTRACT_CREATOR_ACCOUNT);
     
     auction.bestBid=auction.bestBidUser=0;
     setMapValue(1, 2, auction.bestBidUser);
@@ -321,7 +328,8 @@ firstRun();
     // 2000 BID. Expect to be accepted. (refund user 1000)
     "blockheight": 10, "sender": "2000n", "recipient": "999", "amount": "510_5000_0000", "messageText": "bid"
   }
-// timer wakes contract at block 12
+// timer wakes contract at block 12, and then every 10 block again.
+// On block 162, contract sends message Low Balance and does not activate the timer.
 ]
 
 */
